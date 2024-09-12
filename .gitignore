@@ -1,1 +1,7 @@
+.DS_Store
 .env
+
+# build detritus
+/package/
+/package.zip
+/venv

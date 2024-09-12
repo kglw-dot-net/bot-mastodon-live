@@ -1,8 +1,7 @@
-from dotenv import load_dotenv
+import os
 from datetime import datetime
 from mastodon import Mastodon
 
-load_dotenv()
 ACCESS_TOKEN = os.getenv('ACCESS_TOKEN')
 
 mastodon = Mastodon(access_token=ACCESS_TOKEN, api_base_url='https://botsin.space/')
