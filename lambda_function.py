@@ -22,13 +22,13 @@ def lambda_handler(event, context):
         raise Exception(f'payload does not look correct, expected body with json-formatted payload: {payload}')
 
     latest_json = kglw_api_fetch_json('http://kglw.net/api/v2/latest.json')
-    print(f'latest show... {latest_json}')
+    # print(f'latest show... {latest_json}')
 
     if latest_json['data'][0]['show_id'] != payload['show_id']:
         raise Exception(f'webhook fired for show_id:{payload['show_id']} but that is not the most recent show ({latest_json['data'][0]['show_id']})')
 
     last_song = latest_json['data'][-1]
-    print(last_song['songname'])
+    # print(last_song['songname'])
 
     last_toot = mastodon.account_statuses(mastodon.me()['id'])
     if last_toot['content'] == f'<p>{last_song['songname']}</p>':

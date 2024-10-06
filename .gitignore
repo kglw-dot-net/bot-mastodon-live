@@ -2,6 +2,8 @@
 .env
 
 # build detritus
+/__pycache__/
 /package/
 /package.zip
+/reqs.txt
 /venv
