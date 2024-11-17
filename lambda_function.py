@@ -14,18 +14,24 @@ def kglw_api_fetch_json(url):
 
 def lambda_handler(event, context):
     payload = json.loads(event['body'])
+    print('payload', payload)
     if 'show_id' not in payload:
+        print('show_id not in payload...')
         raise Exception(f'payload does not look correct, expected body with json-formatted payload: {payload}')
-    latest_json = kglw_api_fetch_json('http://kglw.net/api/v2/latest.json')
-    if latest_json['data'][0]['show_id'] != payload['show_id']:
-        raise Exception(f'webhook fired for show_id:{payload['show_id']} but that is not the most recent show ({latest_json['data'][0]['show_id']})')
-    last_song = latest_json['data'][-1] # TODO subtle bug: if they start a show with the same song which ended the show prior, the show-starting song won't be posted...
-    last_toot = mastodon.account_statuses(mastodon.me()['id'])
-    if last_toot['content'] == f'<p>{last_song['songname']}</p>':
-        raise Exception('we already tooted about this song...', json.dumps(last_toot), json.dumps(last_song))
+    id_show_just_edited = payload['show_id']
+    latest_json = kglw_api_fetch_json('http://kglw.net/api/v2/latest.json')['data']
+    last_song = latest_json[-1]
+    if last_song['show_id'] != id_show_just_edited:
+        print(f'webhook fired for show_id:{id_show_just_edited} but that is not the most recent show ({last_song['show_id']})')
+        raise Exception(f'webhook fired for show_id:{id_show_just_edited} but that is not the most recent show ({last_song['show_id']})')
+    print('last_song', last_song)
+    print(f'gonna try to post a new toot about {last_song['songname']} (idempotency_key=show_id:{id_show_just_edited}/song_id:{last_song['uniqueid']})')
     try:
-        # TODO: reply to last toot from current show... mastodon.status_reply(last_toot, last_song['songname'])
-        return json.dumps(mastodon.status_post(last_toot, last_song['songname']), default=str)
+        post_result = mastodon.status_post(
+                last_song['songname'],
+                idempotency_key=f'show_id:{id_show_just_edited}/song_id:{last_song['uniqueid']}'
+                )
+        return json.dumps(post_result, default=str)
     except Exception as err:
-        print(err)
+        print('error...', err)
         return json.dumps({'status':'something borked', 'error':err, 'toot':toot}, default=str)
