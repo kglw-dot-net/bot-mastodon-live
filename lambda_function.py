@@ -3,7 +3,8 @@ from mastodon import Mastodon
 import json
 from urllib.request import urlopen, Request
 
-mastodon = Mastodon(access_token=os.getenv('ACCESS_TOKEN'), api_base_url='https://botsin.space/')
+mastodon = Mastodon(access_token=os.getenv('ACCESS_TOKEN'),
+                    api_base_url='https://botsin.space/')
 
 def kglw_api_fetch_json(url):
     return json.loads(
@@ -12,7 +13,7 @@ def kglw_api_fetch_json(url):
                 headers={'User-Agent':'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36'}
                 )).read())
 
-def lambda_handler(event, context):
+def lambda_handler(event, _context):
     payload = json.loads(event['body'])
     print('payload', payload)
     if 'show_id' not in payload:

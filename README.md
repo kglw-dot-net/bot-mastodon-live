@@ -24,14 +24,15 @@ This bot runs via AWS Lambda, on [Axe](https://forum.kglw.net/u/supremeaxendancy
 
 It is triggered by a webhook set up in the Songfish back-end, which fires whenever a setlist is edited.
 
-Webhook payload looks like this:
+The important part of the webhook payload looks like this:
 
 ```json
 {
-  "body": {
-    "show_id": 1694538236
-  }
+  "body": "{ \"show_id\": 1694538236 }"
 }
 ```
+
+...but the actual payload includes more AWS-y stuff.
+
 
 [KGLW.net]: https://kglw.net
