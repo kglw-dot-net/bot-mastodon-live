@@ -1,8 +1,5 @@
 # bot-mastodon-live
 
-🚧 🏗️ Work In Progress 🔧 👷  
-...mostly done, but it needs to move to a new server because `botsin.space` is shutting down soon
-
 This is a Mastodon bot, which uses the [KGLW.net] [API](https://kglw.net/api/docs.php) to identify the latest setlist and then posts the song title of the last song in the setlist.
 
 If a [KGLW.net] Staff Member is updating the setlist in realtime (*this is an assumption*), this bot will be posting each song title "as soon as" it's identified!
@@ -10,8 +7,11 @@ If a [KGLW.net] Staff Member is updating the setlist in realtime (*this is an as
 
 ## TODO
 
-* [ ] automatic post which marks the start of the show (with venue name & link to kglw.net setlist)
-  * [ ] add subsequent song-title posts as responses to the show-starting post
+* [ ] move account to new server
+* [ ] tests
+* [ ] types
+* [ ] automatic day-of-show / "doors time" post, with venue name & link to kglw.net setlist (mark the start of the show )
+  * [ ] add subsequent song-title posts as responses to this/these posts
 
 
 ## Docs
