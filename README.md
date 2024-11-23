@@ -7,7 +7,7 @@ If a [KGLW.net] Staff Member is updating the setlist in realtime (*this is an as
 
 ## TODO
 
-* [ ] move account to new server
+* [ ] move account to new server https://mastodon.social/@kinggizzbot
 * [ ] tests
 * [ ] types
 * [ ] automatic day-of-show / "doors time" post, with venue name & link to kglw.net setlist (mark the start of the show )
